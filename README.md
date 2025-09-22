@@ -1,80 +1,62 @@
-
-
-```markdown
 # 🏛️ GetGSA Coding Test Solution  
 
-This project implements a service that ingests **Company Profile** and **Past Performance** text, parses them into structured JSON, validates fields, maps **NAICS → SIN codes**, and produces a compliance checklist.  
+This project provides a service to ingest **Company Profile** and **Past Performance** text, convert it into structured JSON, validate key fields, map **NAICS → SIN codes**, and generate a compliance checklist.  
 
-It exposes a **Flask API** (`/ingest`) and includes a simple **one-page web UI** to test the functionality.  
+It includes:  
+- A **Flask API** (`/ingest`)  
+- A lightweight **Web UI** for quick testing  
+- Unit tests for validation, parsing, and mapping  
 
 ---
 
 ## 📂 Project Structure  
 
 ```
-
 infotech/
-│── run.py                # Entry point to start the server
+│── run.py                # Application entry point
 │── requirements.txt       # Python dependencies
-│── README.md              # Project documentation
+│── README.md              # Documentation
+│
 │── app/
-│   │── **init**.py        # App factory
+│   │── __init__.py        # App factory
 │   │── api.py             # API routes (Blueprint)
 │   │── parser.py          # Text parsing logic
-│   │── validator.py       # Validation logic
+│   │── validator.py       # Validation rules
 │   │── mapper.py          # NAICS → SIN mapper
 │   │── models.py          # Data models
+│
 │── static/
 │   │── index.html         # Web UI
+│
 │── tests/
-│── test\_api.py        # API unit tests
-│── test\_parser.py     # Parser unit tests
-│── test\_validator.py  # Validator unit tests
-
-````
+│   │── test_api.py        # API tests
+│   │── test_parser.py     # Parser tests
+│   │── test_validator.py  # Validator tests
+```
 
 ---
 
-## 🚀 Getting Started  
+## 🚀 Quick Start  
 
-### 1. Clone Repository  
 ```bash
 git clone <your-repo-url>
 cd infotech
-````
-
-### 2. Create Virtual Environment
-
-```bash
 python -m venv .venv
-.\.venv\Scripts\activate      # Windows PowerShell
-# or
-source .venv/bin/activate     # Linux/Mac
-```
-
-### 3. Install Dependencies
-
-```bash
+source .venv/bin/activate   # or .\.venv\Scripts\activate on Windows
 pip install -r requirements.txt
-```
-
-### 4. Run the Server
-
-```bash
 python run.py
 ```
 
-Server will start at:
-👉 [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+Server will start at:  
+👉 [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
 
-## 🌐 API Usage
+## 🌐 API Usage  
 
-### Endpoint: `POST /ingest`
+### Endpoint: `POST /ingest`  
 
-**Request Body (JSON):**
-
+#### Example Request  
 ```json
 {
   "company_profile": "Acme Robotics LLC\nUEI: ABC123DEF456\nDUNS: 123456789\nNAICS: 541511, 541512\nPOC: Jane Smith, jane@acme.co, (415) 555-0100\nAddress: 444 West Lake Street, Suite 1700, Chicago, IL 60606\nSAM.gov: registered",
@@ -82,8 +64,7 @@ Server will start at:
 }
 ```
 
-**Response (JSON):**
-
+#### Example Response  
 ```json
 {
   "request_id": "a1a527c1-a9c7-408a-afbe-a98de4c8e0e3",
@@ -121,55 +102,50 @@ Server will start at:
 
 ---
 
-## 🖥️ Web UI
+## 🖥️ Web UI  
 
-Open in browser:
-👉 [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+Open in your browser:  
+👉 [http://127.0.0.1:5000](http://127.0.0.1:5000)  
 
-* Paste **Company Profile** and **Past Performance** into the textareas.
-* Click **🚀 Process Data**.
-* Parsed JSON will display below.
+Features:  
+- Paste **Company Profile** and **Past Performance** text  
+- Click **🚀 Process Data**  
+- View parsed JSON results instantly  
 
 ---
 
-## 🧪 Running Tests
+## 🧪 Running Tests  
 
-Tests are written with **pytest**. Run:
-
+Run unit tests with:  
 ```bash
 pytest -v
 ```
 
-Covers:
-
-* Missing UEI detection
-* Invalid email detection
-* NAICS → SIN mapping
+Coverage includes:  
+- Missing UEI detection  
+- Invalid email validation  
+- NAICS → SIN mapping  
 
 ---
 
-## 📝 Notes
+## 📝 Notes  
 
-* By default, the server runs on `http://127.0.0.1:5000`.
-* To allow external connections, change in `run.py`:
-
+- Default server host: `http://127.0.0.1:5000`  
+- To allow external access, update `run.py`:  
   ```python
   app.run(host="0.0.0.0", port=5000, debug=True)
   ```
-* This is a **development server**. For production, use Gunicorn or another WSGI server.
+- This is a **development server**. For production, deploy with **Gunicorn** or another WSGI server.  
 
 ---
 
-## ✅ Features Checklist
+## ✅ Features  
 
-* API with `/ingest`
-* Parsing of company & past performance text
-* Field validation (UEI, email, DUNS, NAICS)
-* NAICS → SIN mapping (deduplicated)
-* Compliance checklist
-* Request logging (audit trail)
-* Unit tests (pytest)
-* Simple UI (bonus)
-
-
-```
+- REST API with `/ingest`  
+- Parsing of company & past performance text  
+- Field validation (UEI, Email, DUNS, NAICS)  
+- NAICS → SIN mapping  
+- Compliance checklist generation  
+- Request logging (audit trail)  
+- Unit tests with pytest  
+- Simple web interface  
